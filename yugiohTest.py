@@ -39,12 +39,12 @@ def list_details(index, card_list):
 def main():
     while True:
         os.system("cls")
-        cardSearch = input("Enter a card name you're looking for: ")
-        cardList = yugioh.get_cards_by_name(cardSearch).list
-        list_hits(0, cardList)
+        card_search = input("Enter a card name you're looking for: ")
+        card_list = yugioh.get_cards_by_name(card_search).list
+        list_hits(0, card_list)
         index = int(input("Choose a card from above list and enter the index for more information: "))
         os.system("cls")
-        list_details(index, cardList)
+        list_details(index, card_list)
         while True:
             try:
                 choice = input("Do you want to search for another card? (Y/N) -> ").lower()
