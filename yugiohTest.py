@@ -36,7 +36,7 @@ def list_details(index, card_list):
     print()
 
 
-if __name__ == '__main__':
+def main():
     while True:
         os.system("cls")
         cardSearch = input("Enter a card name you're looking for: ")
@@ -61,3 +61,7 @@ if __name__ == '__main__':
                 break
         if choice == 'n':
             break
+
+
+if __name__ == '__main__':
+    main()
