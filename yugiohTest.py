@@ -3,18 +3,23 @@ import os
 from requests import get
 import textwrap
 
+
 def listHits(count, cardList):
     if count >= len(cardList):
         return 0
-    else: 
-        print(f"{count+1}: {cardList[count]}")
-        listHits(count+1, cardList)
+    else:
+        print(f"{count + 1}: {cardList[count]}")
+        listHits(count + 1, cardList)
+
+
 def listDetails(index, cardList):
-    card = yugioh.get_card(card_name=cardList[index-1])
-    cardSets = get(f"https://db.ygoprodeck.com/api/v7/cardinfo.php?name={card.name}".replace(" & ", "&").replace(" ", "%20")).json()["data"][0]["card_sets"]
+    card = yugioh.get_card(card_name=cardList[index - 1])
+    cardSets = get(f"https://db.ygoprodeck.com/api/v7/cardinfo.php?name={card.name}".replace(" & ", "&").replace(" ",
+                                                                                                                 "%20")).json()[
+        "data"][0]["card_sets"]
     print(f""" {card.name}
  -------------------------------------------""")
-    print("",textwrap.fill(card.description, 120).replace("\n", "\n ").replace("●", "\n ●"))
+    print("", textwrap.fill(card.description, 120).replace("\n", "\n ").replace("●", "\n ●"))
     print(""" -------------------------------------------""")
     if "Monster" in card.type:
         print(f""" Type: {card.type}
@@ -24,11 +29,12 @@ def listDetails(index, cardList):
         print(f""" Type: {card.type}""")
     print(f""" From {card.cardmarket_price}€ on CardMarket
  From {card.tcgplayer_price}€ on TCGPlayer""")
-    count=1
+    count = 1
     for set in cardSets:
         print(f" Set {count}: {set['set_name']}: {set['set_rarity']}")
-        count+=1
+        count += 1
     print()
+
 
 while True:
     os.system("cls")
@@ -52,5 +58,5 @@ while True:
             os.system("pause")
         if choice == 'n':
             break
-    if choice=='n':
+    if choice == 'n':
         break
