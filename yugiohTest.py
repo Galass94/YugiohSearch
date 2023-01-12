@@ -1,6 +1,7 @@
 import yugioh
 import os
 from requests import get
+import textwrap
 
 def listHits(count, cardList):
     if count >= len(cardList):
@@ -13,7 +14,7 @@ def listDetails(index, cardList):
     cardSets = get(f"https://db.ygoprodeck.com/api/v7/cardinfo.php?name={card.name}".replace(" & ", "&").replace(" ", "%20")).json()["data"][0]["card_sets"]
     print(f""" {card.name}
  -------------------------------------------""")
-    print(" ",card.description.replace(". ", ".\n").replace("\n", "\n "))
+    print("",textwrap.fill(card.description, 120).replace("\n", "\n ").replace("●", "\n ●"))
     print(""" -------------------------------------------""")
     if "Monster" in card.type:
         print(f""" Type: {card.type}
@@ -41,7 +42,6 @@ while True:
         try:
             choice = input("Do you want to search for another card? (Y/N) -> ").lower()
             if choice == 'n':
-                input("Press any key to exit . . .")
                 break
             elif choice == 'y':
                 break
