@@ -36,27 +36,28 @@ def list_details(index, card_list):
     print()
 
 
-while True:
-    os.system("cls")
-    cardSearch = input("Enter a card name you're looking for: ")
-    cardList = yugioh.get_cards_by_name(cardSearch).list
-    list_hits(0, cardList)
-    index = int(input("Choose a card from above list and enter the index for more information: "))
-    os.system("cls")
-    list_details(index, cardList)
+if __name__ == '__main__':
     while True:
-        try:
-            choice = input("Do you want to search for another card? (Y/N) -> ").lower()
+        os.system("cls")
+        cardSearch = input("Enter a card name you're looking for: ")
+        cardList = yugioh.get_cards_by_name(cardSearch).list
+        list_hits(0, cardList)
+        index = int(input("Choose a card from above list and enter the index for more information: "))
+        os.system("cls")
+        list_details(index, cardList)
+        while True:
+            try:
+                choice = input("Do you want to search for another card? (Y/N) -> ").lower()
+                if choice == 'n':
+                    break
+                elif choice == 'y':
+                    break
+                else:
+                    raise ValueError
+            except ValueError as e:
+                print("Please enter only \'y\' or \'n\'")
+                os.system("pause")
             if choice == 'n':
                 break
-            elif choice == 'y':
-                break
-            else:
-                raise ValueError
-        except ValueError as e:
-            print("Please enter only \'y\' or \'n\'")
-            os.system("pause")
         if choice == 'n':
             break
-    if choice == 'n':
-        break
