@@ -1,6 +1,6 @@
+import requests
 import yugioh
 import os
-from requests import get
 import textwrap
 
 
@@ -12,27 +12,27 @@ def list_hits(count, card_list):
         list_hits(count + 1, card_list)
 
 
+def get_card_sets(card_name):
+    url = f"https://db.ygoprodeck.com/api/v7/cardinfo.php?name={'%20'.join(card_name.split())}"
+    response = requests.get(url)
+    response.raise_for_status()
+    return response.json()['data'][0]['card_sets']
+
+
 def list_details(index, card_list):
     card = yugioh.get_card(card_name=card_list[index - 1])
-    card_sets = get(f"https://db.ygoprodeck.com/api/v7/cardinfo.php?name={card.name}".replace(" & ", "&").replace(" ",
-                                                                                                                  "%20")).json()[
-        "data"][0]["card_sets"]
-    print(f""" {card.name}
- -------------------------------------------""")
-    print("", textwrap.fill(card.description, 120).replace("\n", "\n ").replace("●", "\n ●"))
-    print(""" -------------------------------------------""")
+    card_sets = get_card_sets(card.name)
+    separator = '-' * 40
+    print(f"{card.name}\n{separator}")
+    print(textwrap.fill(card.description, 120).replace("\n", "\n ").replace("●", "\n ●"))
+    print(separator)
     if "Monster" in card.type:
-        print(f""" Type: {card.type}
- -------------------------------------------
- ATK: {card.attack} / DEF: {card.defense}""")
+        print(f"Type: {card.type}\n{separator}\nATK: {card.attack} / DEF: {card.defense}")
     elif "Spell" in card.type:
-        print(f""" Type: {card.type}""")
-    print(f""" From {card.cardmarket_price}€ on CardMarket
- From {card.tcgplayer_price}€ on TCGPlayer""")
-    count = 1
-    for set in card_sets:
-        print(f" Set {count}: {set['set_name']}: {set['set_rarity']}")
-        count += 1
+        print(f"Type: {card.type}")
+    print(f"From {card.cardmarket_price}€ on CardMarket\nFrom {card.tcgplayer_price}€ on TCGPlayer")
+    for i, card_set in enumerate(card_sets, 1):
+        print(f"Set {i}: {card_set['set_name']}: {card_set['set_rarity']}")
     print()
 
 
