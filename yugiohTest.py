@@ -7,9 +7,8 @@ import textwrap
 def list_hits(count, card_list):
     if count >= len(card_list):
         return 0
-    else:
-        print(f"{count + 1}: {card_list[count]}")
-        list_hits(count + 1, card_list)
+    for i, card in enumerate(card_list, 1):
+        print(f"{i}: {card}")
 
 
 def get_card_sets(card_name):
