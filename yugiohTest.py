@@ -12,7 +12,7 @@ def list_hits(count, card_list):
 
 
 def get_card_sets(card_name):
-    url = f"https://db.ygoprodeck.com/api/v7/cardinfo.php?name={'%20'.join(card_name.split())}"
+    url = f"https://db.ygoprodeck.com/api/v7/cardinfo.php?name={card_name}".replace(" & ", "&").replace(" ", "%20")
     response = requests.get(url)
     response.raise_for_status()
     return response.json()['data'][0]['card_sets']
