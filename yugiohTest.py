@@ -23,7 +23,8 @@ def list_details(index, card_list):
     card_sets = get_card_sets(card.name)
     separator = '-' * 40
     print(f"{card.name}\n{separator}")
-    print(textwrap.fill(card.description, 120).replace("\n", "\n ").replace("●", "\n ●"))
+    for line in card.description.split("\n"):
+        print(textwrap.fill(line, 100))
     print(separator)
     if "Monster" in card.type:
         print(f"Type: {card.type}\n{separator}\nATK: {card.attack} / DEF: {card.defense}")
